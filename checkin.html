@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NJROTC Event Check-In</title>
+    <style>
+        :root { --orange: #FF6600; --bg: #0a0e1a; --card: #161b22; --border: #30363d; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: white; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid var(--border); background: #0d1117; color: white; box-sizing: border-box; }
+        button { background: #238636; border: none; font-weight: bold; cursor: pointer; }
+        .status-badge { background: #238636; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        h3 { color: #8b949e; font-size: 0.9rem; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        td { padding: 10px 0; border-top: 1px solid var(--border); font-size: 0.9rem; }
+        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<h2 style="margin-bottom: 30px;">NJROTC Operational Check-In</h2>
+
+<div class="container">
+    <div class="card">
+        <h3>Step 1: Check In</h3>
+        <form id="checkinForm">
+            <input type="text" id="cadetName" placeholder="First + Last Name" required>
+            <select id="platoon" required>
+                <option value="">Select Platoon...</option>
+                <option value="NS1-8th">NS1-8th</option>
+                <option value="NS1 9">NS1 9</option>
+                <option value="NS1 8">NS1 8</option>
+                <option value="NS2">NS2</option>
+                <option value="NS3">NS3</option>
+                <option value="NS4">NS4</option>
+            </select>
+            <button type="submit">Check In</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>My Status</h3>
+        <table>
+            <tbody id="statusBody">
+                <tr>
+                    <td style="color: #8b949e; text-align: center;">Not checked in yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const bc = new BroadcastChannel('njrotc_checkin');
+
+    document.getElementById('checkinForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('cadetName').value;
+        const platoon = document.getElementById('platoon').value;
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        // Send to your Dashboard
+        bc.postMessage({ name, platoon, time });
+
+        // Update "My Status" locally
+        document.getElementById('statusBody').innerHTML = `
+            <tr>
+                <td style="font-weight:bold;">${name}</td>
+                <td>${platoon}</td>
+                <td><span class="status-badge">Active</span></td>
+            </tr>`;
+    });
+</script>
+
+</body>
+</html>

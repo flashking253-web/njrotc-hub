@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chief's Live Dashboard</title>
+    <style>
+        :root {
+            --bg: #010409;
+            --card: #0d1117;
+            --accent: #FF6600; /* OHS Orange */
+            --green: #238636;
+            --border: #30363d;
+            --text: #e6edf3;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 30px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .live-dot {
+            height: 12px;
+            width: 12px;
+            background-color: var(--green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--green);
+            margin-right: 10px;
+        }
+        .layout { display: grid; grid-template-columns: 280px 1fr; gap: 25px; }
+        .stat-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        .count { font-size: 4rem; font-weight: bold; color: var(--accent); margin: 10px 0; }
+        .feed-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #161b22; text-align: left; padding: 15px; color: #8b949e; font-size: 0.8rem; text-transform: uppercase; }
+        td { padding: 15px; border-top: 1px solid var(--border); font-size: 1rem; }
+        .platoon-tag {
+            background: #21262d;
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1 style="margin:0;"><span class="live-dot"></span> BATTALION COMMAND FEED</h1>
+        <p style="color: #8b949e; margin: 5px 0;">NJROTC Operational Check-In System</p>
+    </div>
+    <div style="text-align: right;">
+        <div style="font-size: 0.8rem; color: #8b949e;">CHIEF D. EVRA</div>
+        <div style="font-weight: bold; color: var(--accent);">STATION: ALPHA-ONE</div>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <div class="stat-box">
+            <div style="font-size: 0.9rem; color: #8b949e; letter-spacing: 1px;">CADETS ON SITE</div>
+            <div class="count" id="liveCount">0</div>
+            <div style="font-size: 0.75rem; color: var(--green); font-weight: bold;">LIVE SYNC ACTIVE</div>
+        </div>
+    </div>
+
+    <div class="feed-card">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 1
